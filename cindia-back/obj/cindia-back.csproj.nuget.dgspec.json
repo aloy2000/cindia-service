@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/aloy/RiderProjects/cindia-back/cindia-back/cindia-back.csproj": {}
+    "C:\\Users\\Tendry Arivelo\\RiderProjects\\cindia-service\\cindia-back\\cindia-back.csproj": {}
   },
   "projects": {
-    "/home/aloy/RiderProjects/cindia-back/cindia-back/cindia-back.csproj": {
+    "C:\\Users\\Tendry Arivelo\\RiderProjects\\cindia-service\\cindia-back\\cindia-back.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/aloy/RiderProjects/cindia-back/cindia-back/cindia-back.csproj",
+        "projectUniqueName": "C:\\Users\\Tendry Arivelo\\RiderProjects\\cindia-service\\cindia-back\\cindia-back.csproj",
         "projectName": "cindia-back",
-        "projectPath": "/home/aloy/RiderProjects/cindia-back/cindia-back/cindia-back.csproj",
-        "packagesPath": "/home/aloy/.nuget/packages/",
-        "outputPath": "/home/aloy/RiderProjects/cindia-back/cindia-back/obj/",
+        "projectPath": "C:\\Users\\Tendry Arivelo\\RiderProjects\\cindia-service\\cindia-back\\cindia-back.csproj",
+        "packagesPath": "C:\\Users\\Tendry Arivelo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Tendry Arivelo\\RiderProjects\\cindia-service\\cindia-back\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/aloy/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Tendry Arivelo\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -96,7 +96,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.201/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

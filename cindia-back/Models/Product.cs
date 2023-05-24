@@ -3,7 +3,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace Mongo.Services.ProductAPI.Models;
+namespace Mongo.Services.cindia_back.Models;
 
 public class Product
 {
