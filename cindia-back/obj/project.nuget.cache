@@ -1,11 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "sSHrD365BBfaIeLh6WvlM0J7u5x/j6JManBxgXE3qVbJc/62J4rvQglsBttdT9XuLm4+yzBWi5ZKXQqk+1g5SQ==",
+  "dgSpecHash": "wng6HNkrKym/Nyyw6rUSpw2FTwYu4/TWvp9BAPmSRrjpoSXcOsJxOGAakAqlYWQLLv9KM85oGGjplqJ0HCIS0A==",
   "success": true,
   "projectFilePath": "/home/aloy/RiderProjects/cindia-back/cindia-back/cindia-back.csproj",
   "expectedPackageFiles": [
     "/home/aloy/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
     "/home/aloy/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
+    "/home/aloy/.nuget/packages/awssdk.core/3.7.107.4/awssdk.core.3.7.107.4.nupkg.sha512",
+    "/home/aloy/.nuget/packages/awssdk.extensions.netcore.setup/3.7.7/awssdk.extensions.netcore.setup.3.7.7.nupkg.sha512",
+    "/home/aloy/.nuget/packages/awssdk.textract/3.7.105.45/awssdk.textract.3.7.105.45.nupkg.sha512",
     "/home/aloy/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/home/aloy/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/7.0.4/microsoft.aspnetcore.authentication.jwtbearer.7.0.4.nupkg.sha512",
     "/home/aloy/.nuget/packages/microsoft.aspnetcore.openapi/7.0.3/microsoft.aspnetcore.openapi.7.0.3.nupkg.sha512",

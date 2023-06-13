@@ -28,9 +28,11 @@ public class UserDto
     
     public string? ScanCIN { get; set; }
     
-    
-    public virtual Section Section { get; set; }
-    public virtual Casier UserCasier { get; set; }
-    public virtual District UserDistrict { get; set; }
+    public int SectionId { get; set; }
+    public  Section Section { get; set; }
+    public int UserCasierId { get; set; }
+    public  Casier UserCasier { get; set; }
+    public int UserDistrictId { get; set; } //foreign key
+    public  District UserDistrict { get; set; }
 
 }

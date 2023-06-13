@@ -116,3 +116,6 @@ C:/Users/Tendry Arivelo/RiderProjects/cindia-service/cindia-back/obj/Debug/net7.
 C:/Users/Tendry Arivelo/RiderProjects/cindia-service/cindia-back/obj/Debug/net7.0/cindia-back.pdb
 C:/Users/Tendry Arivelo/RiderProjects/cindia-service/cindia-back/obj/Debug/net7.0/cindia-back.genruntimeconfig.cache
 C:/Users/Tendry Arivelo/RiderProjects/cindia-service/cindia-back/obj/Debug/net7.0/ref/cindia-back.dll
+/home/aloy/RiderProjects/cindia-back/cindia-back/bin/Debug/net7.0/AWSSDK.Core.dll
+/home/aloy/RiderProjects/cindia-back/cindia-back/bin/Debug/net7.0/AWSSDK.Textract.dll
+/home/aloy/RiderProjects/cindia-back/cindia-back/bin/Debug/net7.0/AWSSDK.Extensions.NETCore.Setup.dll

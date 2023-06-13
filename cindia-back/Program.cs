@@ -1,8 +1,14 @@
+using Amazon;
 using cindia_back.DbContext;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using cindia_back;
 using cindia_back.Repository;
+using Amazon.Runtime;
+using Amazon.Extensions.NETCore.Setup;
+using Amazon.Textract;
+using Microsoft.Extensions.Configuration;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,11 +16,33 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-var mapper = MappingConfig.RegisterMap().CreateMapper();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+var mapperConfig = new MapperConfiguration(configure =>
+{
+    configure.AddProfile<MappingProfile>();
+});
+var mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+var awsCredentials = new BasicAWSCredentials(
+    builder.Configuration["AWSCredentials:AccessKey"],
+    builder.Configuration["AWSCredentials:SecretKey"]
+);
+builder.Services.AddAWSService<IAmazonTextract>(new AWSOptions()
+{
+    Region = RegionEndpoint.USEast1
+});
+builder.Services.AddSingleton<AWSCredentials>(sp => 
+     new BasicAWSCredentials("AKIA6I7OWIV4HP3V262C", "e85CiNxYhmmZ77Ureu74Ud9mlCkQtAQPtp9b44FM")
+    );
+builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
+
+builder.Services.AddAWSService<IAmazonService>();
+
+
 builder.Services.AddScoped<ICasierRepository, CasierRepository>();
+
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

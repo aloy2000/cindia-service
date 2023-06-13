@@ -12,6 +12,6 @@ public class CasierDto
 
     public string? DateAudiance { get; set; }
     
-    public virtual ICollection<User> CasierUser { get; set; }
+    public ICollection<UserDto> CasierUser { get; set; }
 
 }

@@ -22,10 +22,10 @@ public class CasierRepository: ICasierRepository
     }
     
     
-    public async Task<CasierDto> GetCasiers()
+    public async Task<IEnumerable<CasierDto>> GetCasiers()
     {
         List<Casier> casiers = await _db.Casiers.ToListAsync();
-        return _mapper.Map<CasierDto>(casiers);
+        return _mapper.Map<List<CasierDto>>(casiers);
     }
 
     public Task<CasierDto> GetCasiersById(int CasierId)
@@ -39,9 +39,20 @@ public class CasierRepository: ICasierRepository
         return _mapper.Map<CasierDto>(casier);
     }
 
-    public Task<CasierDto> UpdateCasier(CasierDto casierDto)
+    public async Task<CasierDto> CreateUpdateCasier(CasierDto casierDto)
     {
-        throw new NotImplementedException();
+        Casier casier = _mapper.Map<CasierDto, Casier>(casierDto);
+            if (casier.CasierId > 0)
+            {
+                _db.Casiers.Update(casier);
+            }
+            else
+            {
+                _db.Casiers.Add(casier);
+            }
+
+            await _db.SaveChangesAsync();
+            return _mapper.Map<Casier, CasierDto>(casier);
     }
 
     public async Task<bool> DeleteCasier(int casierId)

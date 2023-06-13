@@ -4,18 +4,15 @@ using cindia_back.Models.Dto;
 
 namespace cindia_back;
 
-public class MappingConfig
+public class MappingProfile : Profile
 {
-    public static MapperConfiguration RegisterMap()
+    public MappingProfile()
     {
-        var mappingConfig = new MapperConfiguration(configure =>
-        {
-            configure.CreateMap<CasierDto, Casier>().ReverseMap();
-            configure.CreateMap<Casier, CasierDto>();
+        CreateMap<CasierDto, Casier>()
+            .ForMember(dest => dest.CasierId, opt => opt.Ignore())
+            .ForMember(dest => dest.CasierUser, opt => opt.MapFrom(src => src.CasierUser));
 
-            //configure.CreateMap<ProductDto, Product>().ReverseMap(); equivalent to 2 lines above
-        });
-
-        return mappingConfig;
+        CreateMap<Casier, CasierDto>()
+            .ForMember(dest => dest.CasierUser, opt => opt.MapFrom(src => src.CasierUser));
     }
 }
