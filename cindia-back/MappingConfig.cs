@@ -14,5 +14,12 @@ public class MappingProfile : Profile
 
         CreateMap<Casier, CasierDto>()
             .ForMember(dest => dest.CasierUser, opt => opt.MapFrom(src => src.CasierUser));
+        
+        CreateMap<DistrictDto, District>()
+            .ForMember(dest => dest.DistrictId, opt => opt.Ignore())
+            .ForMember(dest => dest.DistrictUsers, opt => opt.MapFrom(src => src.DistrictUsers));
+
+        CreateMap<District, DistrictDto>()
+            .ForMember(dest => dest.DistrictUsers, opt => opt.MapFrom(src => src.DistrictUsers));
     }
 }
