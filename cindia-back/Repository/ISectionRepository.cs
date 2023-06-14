@@ -6,6 +6,6 @@ public interface ISectionRepository
 {
     Task<IEnumerable<SectionDto>> GetSection();
     Task<SectionDto> GetSectionById(int SectionId); 
-    Task<SectionDto> UpdateSection( SectionDto SectionDto);
-    Task<SectionDto> DeleteSection(int SectionId);
+    Task<bool> DeleteSection(int SectionId);
+    Task<object?> CreateUpdateSection(SectionDto sectionDto);
 }

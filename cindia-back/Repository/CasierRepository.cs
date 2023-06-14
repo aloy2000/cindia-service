@@ -14,7 +14,7 @@ public class CasierRepository: ICasierRepository
     private readonly ApplicationDbContext _db;
     private readonly IMapper _mapper;
    
-    //constructon
+    //constructor
     public CasierRepository(ApplicationDbContext db, IMapper mapper)
     {
         _db = db;
