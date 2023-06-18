@@ -1,8 +1,12 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using Amazon.Textract;
 using Amazon.Textract.Model;
-using cindia_back.Models;
 using Amazon.Runtime;
+using cindia_back.utils;
+using static cindia_back.utils.Utils;
+
+
 
 
 namespace cindia_back.Controllers;
@@ -20,36 +24,66 @@ public class CinAnalysController:Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> ProcessDocument([FromForm] FileUpload fileUpload)
+    public async Task<IActionResult> ProcessDocument(IFormFile? fileUpload)
     {
         try
         {
-            if (fileUpload?.File is null || fileUpload.File.Length <= 0)
+            if (fileUpload == null || fileUpload.Length <= 0)
             {
                 return BadRequest("No cin uploaded");
             }
 
-            using var stream = fileUpload.File.OpenReadStream();
-            var request = new StartDocumentTextDetectionRequest()
+            var tempFilePath = Path.GetTempFileName();
+            await using (var stream = new FileStream(tempFilePath, FileMode.Create))
             {
-                DocumentLocation = new DocumentLocation()
+                await fileUpload.CopyToAsync(stream);
+            }
+            var imageBytes = await System.IO.File.ReadAllBytesAsync(tempFilePath);
+
+            var request = new DetectDocumentTextRequest()
+            {
+                Document = new Document()
                 {
-                    S3Object = new S3Object
-                    {
-                        Bucket = "my-example-bucket",
-                        Name = "cin"
-                    }
+                    Bytes = new MemoryStream(imageBytes)
                 }
             };
-            var response = await _textract.StartDocumentTextDetectionAsync(request);
-            var jobId = response.JobId;
-            return Ok(jobId);
+
+            var response = await _textract.DetectDocumentTextAsync(request);
+            var responseBlockText = response.Blocks.FindAll(block => block.BlockType.Value == "LINE");
+            var textListFromBlock = new List<string>();
+            var responseKeyValue = new Dictionary<string, object>();
+            var dateFormat = "dd MMMM yyyy";
+            CultureInfo frenchCulture = new CultureInfo("fr-FR");
+            
+            foreach (var block in responseBlockText)
+            {
+                textListFromBlock.Add(block.Text);
+            }
+
+            foreach (var text in textListFromBlock)
+            {
+                if (text.Contains("Nom"))
+                {
+                    responseKeyValue["Name"] = ExtractAllCharacterAfterOccurence(text, "Nom");
+                }
+
+                if (text.Contains("Prenoms"))
+                {
+                    responseKeyValue["LastName"] = ExtractAllCharacterAfterOccurence(text, "Prenoms");
+                }
+
+                if (!Equals(StringToDateTest(text, dateFormat), false))
+                {
+                    responseKeyValue["birth"] = StringToDateTest(text, dateFormat);
+                }
+
+            }
+
+            return Ok(responseKeyValue);
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            return StatusCode(500, $"An error occured: {e.Message}");
         }
     }
-    
 }
