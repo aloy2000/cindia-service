@@ -20,6 +20,17 @@ public static class Utils
         return string.Empty;
     }
 
+    public static object ParseStringToNumber(string input)
+    {
+        try
+        {
+           return Int32.Parse(input);
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
     public static object StringToDateTest(string input, string format)
     {
         string englishNameMonth;
@@ -41,7 +52,6 @@ public static class Utils
         }
         catch (Exception e)
         {
-            Console.WriteLine("error message:"+ e.Message);
             return false;
         }
     }

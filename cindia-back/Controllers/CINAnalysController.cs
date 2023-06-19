@@ -1,12 +1,11 @@
+using System.Collections;
 using System.Globalization;
+using System.Runtime.InteropServices.JavaScript;
 using Microsoft.AspNetCore.Mvc;
 using Amazon.Textract;
 using Amazon.Textract.Model;
 using Amazon.Runtime;
-using cindia_back.utils;
 using static cindia_back.utils.Utils;
-
-
 
 
 namespace cindia_back.Controllers;
@@ -53,13 +52,13 @@ public class CinAnalysController:Controller
             var textListFromBlock = new List<string>();
             var responseKeyValue = new Dictionary<string, object>();
             var dateFormat = "dd MMMM yyyy";
-            CultureInfo frenchCulture = new CultureInfo("fr-FR");
             
             foreach (var block in responseBlockText)
             {
                 textListFromBlock.Add(block.Text);
             }
 
+            var i = 0;
             foreach (var text in textListFromBlock)
             {
                 if (text.Contains("Nom"))
@@ -77,8 +76,101 @@ public class CinAnalysController:Controller
                     responseKeyValue["birth"] = StringToDateTest(text, dateFormat);
                 }
 
+                if (text.Contains("Tao/") || text.Contains("TAO/"))
+                {
+                    var textSplitArray = text.Split(" ");
+                    responseKeyValue["birthplace"] = textSplitArray.Last() + " " + textListFromBlock[i + 1] ;
+                }
+
+                if (!Equals(ParseStringToNumber(text), false))
+                {
+                    if (responseKeyValue.ContainsKey("numCIN"))
+                    {
+                        responseKeyValue["numCIN"] = responseKeyValue["numCIN"] + ParseStringToNumber(text).ToString();
+                    }
+                    else
+                    {
+                        responseKeyValue["numCIN"] = ParseStringToNumber(text).ToString();
+                    }
+                }
+
+                if (text.Contains("FONENANA"))
+                {
+                    if (text.Contains("Domicile"))
+                    {
+                        responseKeyValue["address"] = ExtractAllCharacterAfterOccurence(text, "Domicile") + " " +
+                                                      textListFromBlock[i + 1];
+                    }
+                    else
+                    {
+                        responseKeyValue["address"] = ExtractAllCharacterAfterOccurence(text, "FONENANA") + " " +
+                                                      textListFromBlock[i + 1];
+                    }
+                }
+
+                if (text.Contains("Profession"))
+                {
+                    responseKeyValue["job"] = ExtractAllCharacterAfterOccurence(text, "Profession");
+                }
+
+                if (text.Contains("Arrondissement"))
+                {
+                    responseKeyValue["district"] = ExtractAllCharacterAfterOccurence(text, "Arrondissement");
+                }
+
+                if (text.Contains("RAY NITERAKA"))
+                {
+                    if (text.Contains("Père"))
+                    {
+                        responseKeyValue["fatherName"] = ExtractAllCharacterAfterOccurence(text, "Père");
+                    }
+                    else
+                    {
+                        responseKeyValue["fatherName"] = ExtractAllCharacterAfterOccurence(text, "/");
+                    }
+                } 
+                if (text.Contains("RENY NITERAKA"))
+                {
+                    if (text.Contains("Mère"))
+                    {
+                        responseKeyValue["motherName"] = ExtractAllCharacterAfterOccurence(text, "Mère");
+                    }
+                    else
+                    {
+                        responseKeyValue["motherName"] = ExtractAllCharacterAfterOccurence(text, "/");
+                    }
+                }
+
+                if (text.Contains("NATAO TAO"))
+                {
+                    if (text.Contains("Fait à"))
+                    {
+                        responseKeyValue["doneAt"] = ExtractAllCharacterAfterOccurence(text, "Fait à");
+                    }
+                    else
+                    {
+                        responseKeyValue["doneAt"] = ExtractAllCharacterAfterOccurence(text, "TAO");
+                    }
+                }
+                if (text.Contains("TAMIN'NY"))
+                {
+                    if (text.Contains("Le"))
+                    {
+                        Console.WriteLine("tafiditra ato ve io");
+                        responseKeyValue["on"] = ExtractAllCharacterAfterOccurence(text, "TAMIN'NY/Le");
+                    }
+                    else
+                    {
+                        responseKeyValue["on"] = ExtractAllCharacterAfterOccurence(text, "/");
+                    }
+                }
+                i++;
             }
 
+            /*var finalResponse = new ArrayList();
+            finalResponse.Add(textListFromBlock);
+            finalResponse.Add(responseKeyValue);*/
+            
             return Ok(responseKeyValue);
         }
         catch (Exception e)
