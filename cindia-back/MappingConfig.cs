@@ -14,5 +14,8 @@ public class MappingProfile : Profile
 
         CreateMap<Casier, CasierDto>()
             .ForMember(dest => dest.CasierUser, opt => opt.MapFrom(src => src.CasierUser));
+
+        CreateMap<UserDto, User>().ReverseMap();
+        CreateMap<User, UserDto>();
     }
 }

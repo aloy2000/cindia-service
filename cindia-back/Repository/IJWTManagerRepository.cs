@@ -5,5 +5,5 @@ namespace cindia_back.Repository;
 
 public interface IJWTManagerRepository
 {
-    Tokens Autheticate(string tel, string password);
+    Tokens Authenticate(string tel, string password);
 }

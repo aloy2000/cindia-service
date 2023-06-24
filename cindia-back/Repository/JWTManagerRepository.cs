@@ -16,7 +16,7 @@ public class JWTManagerRepository:IJWTManagerRepository
     {
         _configuration = configuration;
     }
-    public Tokens Autheticate(string tel, string password)
+    public Tokens Authenticate(string tel, string password)
     {
         if (tel != "0348410267" || password != "password")
         {

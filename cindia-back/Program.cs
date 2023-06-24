@@ -44,8 +44,7 @@ builder.Services.AddAWSService<IAmazonService>();
 
 
 builder.Services.AddScoped<ICasierRepository, CasierRepository>();
-
-
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
