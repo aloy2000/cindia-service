@@ -28,9 +28,10 @@ public class CasierRepository: ICasierRepository
         return _mapper.Map<List<CasierDto>>(casiers);
     }
 
-    public Task<CasierDto> GetCasiersById(int CasierId)
+    public async Task<CasierDto> GetCasiersById(int CasierId)
     {
-        throw new NotImplementedException();
+        var user = await _db.Casiers.Where(user => user.CasierId == CasierId).FirstOrDefaultAsync();
+        return _mapper.Map<CasierDto>(user);
     }
 
     public async Task<CasierDto> GetCasierById(int casierId)

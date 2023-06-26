@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "BVfr04pfgzW+NqLYcU1hxIFp/RSqqqcO4IKlrDnwN5ONJQ1PCneGwPlGATrsvEbQX3XBGquXuQYMhUt8TyFpfw==",
+  "dgSpecHash": "L9Fa2hf9mMtB2GE58KjnRIs0ZcUMSSA6ujbRJjEEXWMVULHamp9JG2WuVe/WPlT18KKLYqFGKcvmT5AhUcRrXA==",
   "success": true,
   "projectFilePath": "/home/aloy/RiderProjects/cindia-back/cindia-back/cindia-back.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "/home/aloy/.nuget/packages/awssdk.core/3.7.107.4/awssdk.core.3.7.107.4.nupkg.sha512",
     "/home/aloy/.nuget/packages/awssdk.extensions.netcore.setup/3.7.7/awssdk.extensions.netcore.setup.3.7.7.nupkg.sha512",
     "/home/aloy/.nuget/packages/awssdk.textract/3.7.105.45/awssdk.textract.3.7.105.45.nupkg.sha512",
+    "/home/aloy/.nuget/packages/faker.net/2.0.154/faker.net.2.0.154.nupkg.sha512",
     "/home/aloy/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/home/aloy/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/7.0.4/microsoft.aspnetcore.authentication.jwtbearer.7.0.4.nupkg.sha512",
     "/home/aloy/.nuget/packages/microsoft.aspnetcore.openapi/7.0.3/microsoft.aspnetcore.openapi.7.0.3.nupkg.sha512",
@@ -40,6 +41,7 @@
     "/home/aloy/.nuget/packages/microsoft.netcore.targets/1.1.0/microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "/home/aloy/.nuget/packages/microsoft.openapi/1.4.3/microsoft.openapi.1.4.3.nupkg.sha512",
     "/home/aloy/.nuget/packages/mono.texttemplating/2.2.1/mono.texttemplating.2.2.1.nupkg.sha512",
+    "/home/aloy/.nuget/packages/netstandard.library/2.0.3/netstandard.library.2.0.3.nupkg.sha512",
     "/home/aloy/.nuget/packages/npgsql/7.0.2/npgsql.7.0.2.nupkg.sha512",
     "/home/aloy/.nuget/packages/npgsql.entityframeworkcore.postgresql/7.0.3/npgsql.entityframeworkcore.postgresql.7.0.3.nupkg.sha512",
     "/home/aloy/.nuget/packages/swashbuckle.aspnetcore/6.4.0/swashbuckle.aspnetcore.6.4.0.nupkg.sha512",

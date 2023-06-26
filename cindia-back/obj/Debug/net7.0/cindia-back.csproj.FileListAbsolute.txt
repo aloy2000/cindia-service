@@ -120,3 +120,5 @@ C:/Users/Tendry Arivelo/RiderProjects/cindia-service/cindia-back/obj/Debug/net7.
 /home/aloy/RiderProjects/cindia-back/cindia-back/bin/Debug/net7.0/AWSSDK.Textract.dll
 /home/aloy/RiderProjects/cindia-back/cindia-back/bin/Debug/net7.0/AWSSDK.Extensions.NETCore.Setup.dll
 /home/aloy/RiderProjects/cindia-back/cindia-back/bin/Debug/net7.0/Microsoft.IdentityModel.Abstractions.dll
+/home/aloy/RiderProjects/cindia-back/cindia-back/bin/Debug/net7.0/Faker.Net.6.0.dll
+/home/aloy/RiderProjects/cindia-back/cindia-back/bin/Debug/net7.0/de-DE/Faker.Net.6.0.resources.dll

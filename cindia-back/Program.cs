@@ -8,6 +8,7 @@ using cindia_back.Repository;
 using Amazon.Runtime;
 using Amazon.Extensions.NETCore.Setup;
 using Amazon.Textract;
+using cindia_back.utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -45,6 +46,8 @@ builder.Services.AddAWSService<IAmazonService>();
 
 builder.Services.AddScoped<ICasierRepository, CasierRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IDistrictRepository, DistrictRepository>();
+builder.Services.AddScoped<ISectionRepository, SectionRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -89,5 +92,4 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();

@@ -14,9 +14,9 @@ public class UserController:Controller
     private ResponseDto _responseDto;
 
     
-    public UserController(IJWTManagerRepository jWTManager, IUserRepository userRepository)
+    public UserController(IJWTManagerRepository jwtManager, IUserRepository userRepository)
     {
-        _jWTManager = jWTManager;
+        _jWTManager = jwtManager;
         _userRepository = userRepository;
         _responseDto = new ResponseDto();
     }
@@ -44,6 +44,27 @@ public class UserController:Controller
         }
         return Ok(token);
     }
+
+    [AllowAnonymous]
+    [HttpPost]
+    [Route("register")]
+    public async Task<object> Create(UserDto userDto)
+    {
+        try
+        {
+            var userCreated = await _userRepository.CreateUser(userDto);
+            _responseDto.Result = userCreated;
+            _responseDto.DisplayMessage = "user created successful";
+        }
+        catch (Exception e)
+        {
+            _responseDto.IsSuccess = false;
+            _responseDto.ErrorMessage = new List<string>() { e.ToString() };
+        }
+
+        return _responseDto;
+    }
+
 
     [HttpGet]
     public async Task<object> Get()

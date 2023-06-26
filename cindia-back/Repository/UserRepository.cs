@@ -55,6 +55,14 @@ public class UserRepository: IUserRepository
         }
     }
 
+    public async Task<UserDto> CreateUser(UserDto userDto)
+    {
+        User user = _mapper.Map<UserDto, User>(userDto);
+        _db.Users.Add(user);
+        await _db.SaveChangesAsync();
+        return _mapper.Map<User, UserDto>(user);
+    }
+
     public async Task<UserDto> FindUserByNum(string numTel)
     {
         var user = await _db.Users.FirstOrDefaultAsync(u => u.Tel == numTel);

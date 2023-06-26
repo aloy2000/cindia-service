@@ -8,5 +8,6 @@ public interface IUserRepository
     Task<UserDto> GetUserById(int userId); 
     Task<UserDto> UpdateUser( UserDto userDto);
     Task<bool> DeleteUser(int userId);
+    Task<UserDto> CreateUser(UserDto userDto);
     Task<UserDto> FindUserByNum(string numTel);
 }

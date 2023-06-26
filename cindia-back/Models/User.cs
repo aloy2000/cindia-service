@@ -11,7 +11,7 @@ public class User
 
     [Required]public string? FirstName { get; set; }
 
-    [Required]public string? Birthday { get; set; }
+    [Required]public DateTime Birthday { get; set; }
 
     [Required]public string? Birthplace { get; set; }
     
@@ -41,7 +41,6 @@ public class User
     
     public int UserDistrictId { get; set; } //foreign key
     public   District UserDistrict { get; set; } // navigation property
-
     
 
 }
