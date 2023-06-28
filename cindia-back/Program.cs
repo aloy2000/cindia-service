@@ -77,6 +77,12 @@ builder.Services.AddSingleton<IJWTManagerRepository, JWTManagerRepository>();
 
 var app = builder.Build();
 
+var webSocketOptions = new WebSocketOptions
+{
+    KeepAliveInterval = TimeSpan.FromMinutes(2)
+};
+app.UseWebSockets(webSocketOptions);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -90,6 +96,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+
 
 app.MapControllers();
 app.Run();
