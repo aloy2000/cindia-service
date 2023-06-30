@@ -27,6 +27,7 @@ public class CinAnalysController:Controller
     {
         try
         {
+            Console.WriteLine("File uploaded" + fileUpload);
             if (fileUpload == null || fileUpload.Length <= 0)
             {
                 return BadRequest("No cin uploaded");
@@ -63,12 +64,12 @@ public class CinAnalysController:Controller
             {
                 if (text.Contains("Nom"))
                 {
-                    responseKeyValue["Name"] = ExtractAllCharacterAfterOccurence(text, "Nom");
+                    responseKeyValue["name"] = ExtractAllCharacterAfterOccurence(text, "Nom");
                 }
 
                 if (text.Contains("Prenoms"))
                 {
-                    responseKeyValue["LastName"] = ExtractAllCharacterAfterOccurence(text, "Prenoms");
+                    responseKeyValue["lastName"] = ExtractAllCharacterAfterOccurence(text, "Prenoms");
                 }
 
                 if (!Equals(StringToDateTest(text, dateFormat), false))

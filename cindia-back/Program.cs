@@ -8,15 +8,17 @@ using cindia_back.Repository;
 using Amazon.Runtime;
 using Amazon.Extensions.NETCore.Setup;
 using Amazon.Textract;
-using cindia_back.utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(p => p.AddPolicy("cors-app", builder =>
+{
+    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -91,11 +93,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-
-
+app.UseCors("cors-app");
 app.UseAuthentication();
-app.UseAuthorization();
+app.UseAuthorization();    
 
 
 

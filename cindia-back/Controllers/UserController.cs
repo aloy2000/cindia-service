@@ -9,14 +9,14 @@ namespace cindia_back.Controllers;
 
 public class UserController:Controller
 {
-    private readonly IJWTManagerRepository _jWTManager;
+    private readonly IJWTManagerRepository _jWtManager;
     private readonly IUserRepository _userRepository;
-    private ResponseDto _responseDto;
+    private readonly ResponseDto _responseDto;
 
     
     public UserController(IJWTManagerRepository jwtManager, IUserRepository userRepository)
     {
-        _jWTManager = jwtManager;
+        _jWtManager = jwtManager;
         _userRepository = userRepository;
         _responseDto = new ResponseDto();
     }
@@ -37,7 +37,7 @@ public class UserController:Controller
             return Unauthorized();
         }
         
-        var token = _jWTManager.Authenticate(tel, password);
+        var token = _jWtManager.Authenticate(tel, password);
         if (token == null)
         {
             return Unauthorized();
