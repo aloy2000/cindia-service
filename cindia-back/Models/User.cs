@@ -32,7 +32,7 @@ public class User
     [Required]public string? ScanCIN { get; set; }
     
     public int SectionId { get; set; }
-    public  Section Section { get; set; }
+    public  Section UserSection { get; set; }
     
     public int UserCasierId { get; set; }
     public   Casier UserCasier { get; set; }

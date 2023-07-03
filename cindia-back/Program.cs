@@ -43,7 +43,7 @@ builder.Services.AddAWSService<IAmazonService>();
 builder.Services.AddScoped<ICasierRepository, CasierRepository>();
 builder.Services.AddScoped<IDistrictRepository, DistrictRepository>();
 builder.Services.AddScoped<ISectionRepository, SectionRepository>();
-
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 
 

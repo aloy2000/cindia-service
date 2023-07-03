@@ -22,11 +22,13 @@ public class MappingProfile : Profile
         CreateMap<District, DistrictDto>()
             .ForMember(dest => dest.DistrictUsers, opt => opt.MapFrom(src => src.DistrictUsers));
             
-        CreateMap<Section, Section>()
-            .ForMember(dest => dest.SectionId, opt => opt.Ignore())
-            .ForMember(dest => dest.SectionDistrict, opt => opt.MapFrom(src => src.SectionDistrict));
+       
+        CreateMap<User, User>()
+            .ForMember(dest => dest.UserId, opt => opt.Ignore())
+            .ForMember(dest => dest.UserSection, opt => opt.MapFrom(src => src.UserSection));
 
         CreateMap<Section, SectionDto>()
             .ForMember(dest => dest.SectionDistricts, opt => opt.MapFrom(src => src.SectionDistrict));
+        
     }
 }

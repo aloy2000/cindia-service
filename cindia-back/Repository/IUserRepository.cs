@@ -4,7 +4,7 @@ namespace cindia_back.Repository;
 
 public interface IUserRepository
 {
-    Task<IEnumerable<CasierDto>> GetUser();
+    Task<IEnumerable<UserDto>> GetUser();
     Task<UserDto> GetUserById(int UserId); 
     Task<UserDto> UpdateUser( UserDto UserDto);
     Task<UserDto> DeleteUser(int UserId); 

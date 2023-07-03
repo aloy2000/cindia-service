@@ -9,6 +9,8 @@ public class Section
     [Required] public string? SectionName { get; set; }
     public virtual ICollection<User> Users { get; set; }
     public int DistrictId { get; set; }
+
     public District SectionDistrict { get; set; }
+    public User SectionUser { get; set; }
 
 }

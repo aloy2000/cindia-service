@@ -9,5 +9,6 @@ public class District
     
     public    ICollection<User> DistrictUsers { get; set; }
     public virtual ICollection<Section> DistrictSection { get; set; }
+   // public virtual ICollection<User> DistrictUser { get; set; }
 
 }

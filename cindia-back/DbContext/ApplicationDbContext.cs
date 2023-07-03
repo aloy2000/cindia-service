@@ -18,7 +18,7 @@ public class ApplicationDbContext:DbContext
     {
         modelBuilder.Entity<Section>()
             .HasMany(u => u.Users)
-            .WithOne(o => o.Section)
+            .WithOne(o => o.UserSection)
             .HasForeignKey(o => o.SectionId);
         
         modelBuilder.Entity<Casier>()
