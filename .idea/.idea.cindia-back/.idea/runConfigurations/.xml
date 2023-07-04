@@ -1,0 +1,19 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" type="DotNetStaticMethod" factoryName=".NET Static Method" editBeforeRun="true" singleton="false">
+    <option name="EXE_PATH" value="C:\Program Files\JetBrains\JetBrains Rider 2022.3\lib\ReSharperHost\JetLauncherILc.exe" />
+    <option name="PROGRAM_PARAMETERS" value="" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cindia-back/bin/Debug/net7.0" />
+    <option name="PASS_PARENT_ENVS" value="1" />
+    <option name="USE_EXTERNAL_CONSOLE" value="0" />
+    <option name="USE_MONO" value="0" />
+    <option name="RUNTIME_ARGUMENTS" value="" />
+    <option name="PROJECT_PATH" value="$PROJECT_DIR$/cindia-back/cindia-back.csproj" />
+    <option name="PROJECT_TFM" value="net7.0" />
+    <option name="CLASS_NAME" value="cindia_back.utils.EncryptRSA" />
+    <option name="METHOD_NAME" value="Main" />
+    <method v="2">
+      <option name="Build" />
+      <option name="CleanProject" default="false" projectName="cindia-back" projectPath="file://$PROJECT_DIR$/cindia-back/cindia-back.csproj" />
+    </method>
+  </configuration>
+</component>

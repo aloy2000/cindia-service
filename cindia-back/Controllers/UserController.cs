@@ -7,13 +7,13 @@ namespace cindia_back.Controllers;
 
 [Route("api/[controller]")]
 
-public class UserController:Controller
+public class UserController : Controller
 {
     private readonly IJWTManagerRepository _jWtManager;
     private readonly IUserRepository _userRepository;
     private readonly ResponseDto _responseDto;
 
-    
+
     public UserController(IJWTManagerRepository jwtManager, IUserRepository userRepository)
     {
         _jWtManager = jwtManager;
@@ -24,35 +24,34 @@ public class UserController:Controller
     [AllowAnonymous]
     [HttpPost]
     [Route("authenticate")]
-    public async Task<IActionResult> Authenticate(string tel, string password)
+    public async Task<IActionResult> Authenticate([FromBody] AuthDto authDto)
     {
-        var user =  await _userRepository.FindUserByNum(tel);
+        var user = await _userRepository.FindUserByNum(authDto.Tel);
         if (user == null)
         {
             return NotFound();
         }
-
-        if (user.Password != password)
+        if (user.Password != authDto.Password)
         {
             return Unauthorized();
         }
-        
-        var token = _jWtManager.Authenticate(tel, password);
+
+        var token = _jWtManager.Authenticate(user.Tel, user.Password);
         if (token == null)
         {
             return Unauthorized();
         }
-        return Ok(token);
+        var response = new Dictionary<string, object>();
+        response["token"] = token;
+        response["user"] = user;
+        return Ok(response);
     }
 
-    [AllowAnonymous]
     [HttpPost]
     [Route("register")]
-    public async Task<object> Create(UserDto userDto, string publicKey)
+    public async Task<object> Create([FromBody] UserDto userDto)
     {
-        
-        
-        Console.WriteLine("userDto" + userDto);
+        Console.WriteLine("userDto:" + userDto.Name);
         try
         {
             UserDto user = null;

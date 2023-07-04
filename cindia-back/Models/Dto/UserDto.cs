@@ -10,7 +10,7 @@ public class UserDto
     
     public string? Birthday { get; set; }
 
-    public DateTime? Birthplace { get; set; }
+    public string? Birthplace { get; set; }
     
     public string? Address { get; set; }
 
@@ -31,10 +31,7 @@ public class UserDto
     public string? Password { get; set; }
     
     public int SectionId { get; set; }
-    public  Section Section { get; set; }
     public int UserCasierId { get; set; }
-    public  Casier UserCasier { get; set; }
     public int UserDistrictId { get; set; } //foreign key
-    public  District UserDistrict { get; set; }
 
 }
