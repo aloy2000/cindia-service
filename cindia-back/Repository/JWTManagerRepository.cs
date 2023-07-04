@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace cindia_back.Repository;
 
-public class JWTManagerRepository:IJWTManagerRepository
+public class    JWTManagerRepository:IJWTManagerRepository
 {
 
     private readonly IConfiguration _configuration;

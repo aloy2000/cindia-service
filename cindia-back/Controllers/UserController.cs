@@ -48,11 +48,18 @@ public class UserController:Controller
     [AllowAnonymous]
     [HttpPost]
     [Route("register")]
-    public async Task<object> Create(UserDto userDto)
+    public async Task<object> Create(UserDto userDto, string publicKey)
     {
+        
+        
         Console.WriteLine("userDto" + userDto);
         try
         {
+            UserDto user = null;
+            user.Password = PasswordEncryption.EncryptPassword(user.Password, publicKey);
+
+            _userRepository.CreateUser(user);
+
             var userCreated = await _userRepository.CreateUser(userDto);
             _responseDto.Result = userCreated;
             _responseDto.DisplayMessage = "user created successful";

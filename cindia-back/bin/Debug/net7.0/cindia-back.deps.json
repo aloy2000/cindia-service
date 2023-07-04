@@ -20,7 +20,8 @@
           "Swashbuckle.AspNetCore": "6.4.0",
           "Swashbuckle.AspNetCore.Annotations": "6.5.0",
           "Swashbuckle.AspNetCore.SwaggerUI": "6.5.0",
-          "System.IdentityModel.Tokens.Jwt": "6.31.0"
+          "System.IdentityModel.Tokens.Jwt": "6.31.0",
+          "System.Security.Cryptography.Cng": "6.0.0-preview.4.21253.7"
         },
         "runtime": {
           "cindia-back.dll": {}
@@ -299,7 +300,7 @@
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
           "Microsoft.IdentityModel.Logging": "6.31.0",
-          "System.Security.Cryptography.Cng": "4.5.0"
+          "System.Security.Cryptography.Cng": "6.0.0-preview.4.21253.7"
         },
         "runtime": {
           "lib/net6.0/Microsoft.IdentityModel.Tokens.dll": {
@@ -416,6 +417,7 @@
           }
         }
       },
+      "System.Formats.Asn1/6.0.0-preview.4.21253.7": {},
       "System.IdentityModel.Tokens.Jwt/6.31.0": {
         "dependencies": {
           "Microsoft.IdentityModel.JsonWebTokens": "6.31.0",
@@ -434,7 +436,11 @@
           "Microsoft.NETCore.Targets": "1.1.0"
         }
       },
-      "System.Security.Cryptography.Cng/4.5.0": {},
+      "System.Security.Cryptography.Cng/6.0.0-preview.4.21253.7": {
+        "dependencies": {
+          "System.Formats.Asn1": "6.0.0-preview.4.21253.7"
+        }
+      },
       "System.Text.Encoding/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -778,6 +784,13 @@
       "path": "system.codedom/4.4.0",
       "hashPath": "system.codedom.4.4.0.nupkg.sha512"
     },
+    "System.Formats.Asn1/6.0.0-preview.4.21253.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-a2JOF9OLowguJctYksYndG3Y4gFFVWmmAMLnqfsubt5RfeKM/o/pWg5qFx3T8I6P3G3gGMPhbcnGZ0y7JNH+PQ==",
+      "path": "system.formats.asn1/6.0.0-preview.4.21253.7",
+      "hashPath": "system.formats.asn1.6.0.0-preview.4.21253.7.nupkg.sha512"
+    },
     "System.IdentityModel.Tokens.Jwt/6.31.0": {
       "type": "package",
       "serviceable": true,
@@ -792,12 +805,12 @@
       "path": "system.runtime/4.3.0",
       "hashPath": "system.runtime.4.3.0.nupkg.sha512"
     },
-    "System.Security.Cryptography.Cng/4.5.0": {
+    "System.Security.Cryptography.Cng/6.0.0-preview.4.21253.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-WG3r7EyjUe9CMPFSs6bty5doUqT+q9pbI80hlNzo2SkPkZ4VTuZkGWjpp77JB8+uaL4DFPRdBsAY+DX3dBK92A==",
-      "path": "system.security.cryptography.cng/4.5.0",
-      "hashPath": "system.security.cryptography.cng.4.5.0.nupkg.sha512"
+      "sha512": "sha512-xhuvxSyLpEc1YAseHP5UDan+fH5P75fJkZ29JxjWUMBIIep75MA64+hGbwDZ7F3iOsxAB5kUu7iYGGATggnqkQ==",
+      "path": "system.security.cryptography.cng/6.0.0-preview.4.21253.7",
+      "hashPath": "system.security.cryptography.cng.6.0.0-preview.4.21253.7.nupkg.sha512"
     },
     "System.Text.Encoding/4.3.0": {
       "type": "package",
