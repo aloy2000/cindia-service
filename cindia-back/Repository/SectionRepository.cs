@@ -6,69 +6,49 @@ using Microsoft.EntityFrameworkCore;
 
 namespace cindia_back.Repository;
 
-public class SectionRepository : ISectionRepository
+public class SectionRepository: ISectionRepository
 {
     private readonly ApplicationDbContext _db;
     private readonly IMapper _mapper;
 
-    public SectionRepository(ApplicationDbContext db, IMapper mapper)
+    public SectionRepository(ApplicationDbContext dbContext, IMapper mapper)
     {
-        db = _db;
-        mapper = _mapper;
+        _db = dbContext;
+        _mapper = mapper;
     }
+
     public async Task<IEnumerable<SectionDto>> GetSection()
     {
-        List<Section> sections = await _db.Sections.ToListAsync();
+        var sections = await _db.Sections.ToListAsync();
         return _mapper.Map<List<SectionDto>>(sections);
     }
 
-    public Task<SectionDto> GetSectionById(int SectionId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<SectionDto> UpdateSection(SectionDto SectionDto)
-    {
-        throw new NotImplementedException();
-    }
-    
-    public async Task<SectionDto> GetSectionsById(int sectionId)
+    public async Task<SectionDto> GetSectionById(int sectionId)
     {
         var section = await _db.Sections.Where(section => section.SectionId == sectionId).FirstOrDefaultAsync();
         return _mapper.Map<SectionDto>(section);
     }
-    
-    public async Task<object?> CreateUpdateSection(SectionDto sectionDto)
-    {
-        Section section = _mapper.Map<SectionDto, Section>(sectionDto);
-        if (section.SectionId > 0)
-        {
-            _db.Sections.Update(section);
-        }
-        else
-        {
-            _db.Sections.Add(section);
-        }
 
-        await _db.SaveChangesAsync();
-        return _mapper.Map<Section, SectionDto>(section);
+    public async Task<SectionDto> UpdateSection(SectionDto sectionDto)
+    {
+        throw new NotImplementedException();
     }
 
-    public async Task<bool> DeleteSection(int SectionId)
+    public async Task<bool> DeleteSection(int sectionId)
     {
         try
         {
-            var sectiontodelete = await _db.Sections.FirstOrDefaultAsync(section => section.SectionId == SectionId);
-            if (sectiontodelete is null)
+            var sectionToDelete = await _db.Sections.FirstOrDefaultAsync(section => section.DistrictId == sectionId);
+            if (sectionToDelete is null)
             {
                 return false;
             }
 
-            _db.Sections.Remove(sectiontodelete);
+            _db.Sections.Remove(sectionToDelete);
             await _db.SaveChangesAsync();
             return true;
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             return false;
         }

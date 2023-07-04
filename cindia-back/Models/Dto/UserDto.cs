@@ -10,9 +10,9 @@ public class UserDto
     
     public string? Birthday { get; set; }
 
-    public string? Birthplace { get; set; }
+    public DateTime? Birthplace { get; set; }
     
-    public string? Adress { get; set; }
+    public string? Address { get; set; }
 
     public string? FathersName { get; set; }
 
@@ -27,6 +27,8 @@ public class UserDto
     public string? NumCIN { get; set; }
     
     public string? ScanCIN { get; set; }
+    
+    public string? Password { get; set; }
     
     public int SectionId { get; set; }
     public  Section Section { get; set; }

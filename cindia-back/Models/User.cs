@@ -11,11 +11,11 @@ public class User
 
     [Required]public string? FirstName { get; set; }
 
-    [Required]public string? Birthday { get; set; }
+    [Required]public DateTime Birthday { get; set; }
 
     [Required]public string? Birthplace { get; set; }
     
-    [Required]public string? Adress { get; set; }
+    [Required]public string? Address { get; set; }
 
     [Required]public string? FathersName { get; set; }
 
@@ -30,6 +30,8 @@ public class User
     [Required]public string? NumCIN { get; set; }
     
     [Required]public string? ScanCIN { get; set; }
+
+    [Required] public string? Password { get; set; }
     
     public int SectionId { get; set; }
     public  Section UserSection { get; set; }
@@ -39,7 +41,6 @@ public class User
     
     public int UserDistrictId { get; set; } //foreign key
     public   District UserDistrict { get; set; } // navigation property
-
     
 
 }

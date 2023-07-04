@@ -1,3 +1,4 @@
+using System.Text;
 using Amazon;
 using cindia_back.DbContext;
 using Microsoft.EntityFrameworkCore;
@@ -7,12 +8,19 @@ using cindia_back.Repository;
 using Amazon.Runtime;
 using Amazon.Extensions.NETCore.Setup;
 using Amazon.Textract;
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(p => p.AddDefaultPolicy( policy =>
+{
+    policy.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+}));
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -41,18 +49,43 @@ builder.Services.AddAWSService<IAmazonService>();
 
 
 builder.Services.AddScoped<ICasierRepository, CasierRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IDistrictRepository, DistrictRepository>();
 builder.Services.AddScoped<ISectionRepository, SectionRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-
-
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(o =>
+{
+    var Key = Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]);
+    o.SaveToken = true;
+    o.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["JWT:Issuer"],
+        ValidAudience = builder.Configuration["JWT:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Key)
+    };
+});
+
+builder.Services.AddSingleton<IJWTManagerRepository, JWTManagerRepository>();
 
 var app = builder.Build();
+
+var webSocketOptions = new WebSocketOptions
+{
+    KeepAliveInterval = TimeSpan.FromMinutes(2)
+};
+app.UseWebSockets(webSocketOptions);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -62,9 +95,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors();
+app.UseAuthentication();
+app.UseAuthorization();    
 
-app.UseAuthorization();
+
 
 app.MapControllers();
-
 app.Run();

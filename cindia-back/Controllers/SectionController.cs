@@ -3,77 +3,59 @@ using cindia_back.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cindia_back.Controllers;
+
 [Route("api/[controller]")]
-
-
-public class SectionController : Controller
+public class SectionController: Controller
 {
     private readonly ISectionRepository _sectionRepository;
     private readonly ResponseDto _responseDto;
-
+    
     public SectionController(ISectionRepository sectionRepository)
     {
         _sectionRepository = sectionRepository;
         _responseDto = new ResponseDto();
     }
-    // GET
+    
     [HttpGet]
-    public async Task<object> GetSections()
+    public async Task<object> Get()
     {
         try
         {
-            IEnumerable<SectionDto> allSections = await  _sectionRepository.GetSection();
-            _responseDto.Result = allSections;
+            var sections = await _sectionRepository.GetSection();
+            _responseDto.Result = sections;
+        }
+        catch (Exception e)
+        {
+            _responseDto.IsSuccess = false;
+            _responseDto.ErrorMessage = new List<string>() { e.ToString() }; 
+        }
+
+        return _responseDto;
+    }
+
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<object> Get(int id)
+    {
+        try
+        {
+            var section = await _sectionRepository.GetSectionById(id);
+            _responseDto.Result = section;
         }
         catch (Exception e)
         {
             _responseDto.IsSuccess = false;
             _responseDto.ErrorMessage = new List<string>() { e.ToString() };
         }
-
         return _responseDto;
     }
     
-    [HttpGet]
-    [Route("{id}")]
-    public async Task<object> GetSectionById(int id)
-    {
-        try
-        {
-            var setiontDto = await _sectionRepository.GetSectionById(id);
-            _responseDto.Result = setiontDto;
-        }
-        catch (Exception e)
-        {
-            _responseDto.IsSuccess = false;
-            _responseDto.ErrorMessage = new List<string>() { e.ToString() };
-        }
-
-        return _responseDto;
-    }
-    [HttpPost]
-    public async Task<object> Post([FromBody] SectionDto sectionDto)
-    {
-        try
-        {
-            var sectionCreated = await _sectionRepository.CreateUpdateSection(sectionDto);
-            _responseDto.Result = sectionCreated;
-        }
-        catch (Exception e)
-        {
-            _responseDto.IsSuccess = false;
-            _responseDto.ErrorMessage = new List<string>() { e.ToString() };
-        }
-
-        return _responseDto;
-    }
-
     [HttpDelete]
-    public async Task<object> Delete(int sectionId)
+    public async Task<object> Delete(int id)
     {
         try
         {
-            var result = await _sectionRepository.DeleteSection(sectionId);
+            var result = await _sectionRepository.DeleteSection(id);
             _responseDto.Result = result;
         }
         catch (Exception e)
@@ -84,5 +66,4 @@ public class SectionController : Controller
 
         return _responseDto;
     }
-
 }

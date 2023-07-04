@@ -1,8 +1,11 @@
+using System.Collections;
+using System.Globalization;
+using System.Runtime.InteropServices.JavaScript;
 using Microsoft.AspNetCore.Mvc;
 using Amazon.Textract;
 using Amazon.Textract.Model;
-using cindia_back.Models;
 using Amazon.Runtime;
+using static cindia_back.utils.Utils;
 
 
 namespace cindia_back.Controllers;
@@ -20,36 +23,160 @@ public class CinAnalysController:Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> ProcessDocument([FromForm] FileUpload fileUpload)
+    public async Task<IActionResult> ProcessDocument(IFormFile? fileUpload)
     {
         try
         {
-            if (fileUpload?.File is null || fileUpload.File.Length <= 0)
+            Console.WriteLine("File uploaded" + fileUpload);
+            if (fileUpload == null || fileUpload.Length <= 0)
             {
                 return BadRequest("No cin uploaded");
             }
 
-            using var stream = fileUpload.File.OpenReadStream();
-            var request = new StartDocumentTextDetectionRequest()
+            var tempFilePath = Path.GetTempFileName();
+            await using (var stream = new FileStream(tempFilePath, FileMode.Create))
             {
-                DocumentLocation = new DocumentLocation()
+                await fileUpload.CopyToAsync(stream);
+            }
+            var imageBytes = await System.IO.File.ReadAllBytesAsync(tempFilePath);
+
+            var request = new DetectDocumentTextRequest()
+            {
+                Document = new Document()
                 {
-                    S3Object = new S3Object
-                    {
-                        Bucket = "my-example-bucket",
-                        Name = "cin"
-                    }
+                    Bytes = new MemoryStream(imageBytes)
                 }
             };
-            var response = await _textract.StartDocumentTextDetectionAsync(request);
-            var jobId = response.JobId;
-            return Ok(jobId);
+
+            var response = await _textract.DetectDocumentTextAsync(request);
+            var responseBlockText = response.Blocks.FindAll(block => block.BlockType.Value == "LINE");
+            var textListFromBlock = new List<string>();
+            var responseKeyValue = new Dictionary<string, object>();
+            var dateFormat = "dd MMMM yyyy";
+            
+            foreach (var block in responseBlockText)
+            {
+                textListFromBlock.Add(block.Text);
+            }
+
+            var i = 0;
+            foreach (var text in textListFromBlock)
+            {
+                if (text.Contains("Nom"))
+                {
+                    responseKeyValue["name"] = ExtractAllCharacterAfterOccurence(text, "Nom");
+                }
+
+                if (text.Contains("Prenoms"))
+                {
+                    responseKeyValue["lastName"] = ExtractAllCharacterAfterOccurence(text, "Prenoms");
+                }
+
+                if (!Equals(StringToDateTest(text, dateFormat), false))
+                {
+                    responseKeyValue["birth"] = StringToDateTest(text, dateFormat);
+                }
+
+                if (text.Contains("Tao/") || text.Contains("TAO/"))
+                {
+                    var textSplitArray = text.Split(" ");
+                    responseKeyValue["birthplace"] = textSplitArray.Last() + " " + textListFromBlock[i + 1] ;
+                }
+
+                if (!Equals(ParseStringToNumber(text), false))
+                {
+                    if (responseKeyValue.ContainsKey("numCIN"))
+                    {
+                        responseKeyValue["numCIN"] = responseKeyValue["numCIN"] + ParseStringToNumber(text).ToString();
+                    }
+                    else
+                    {
+                        responseKeyValue["numCIN"] = ParseStringToNumber(text).ToString();
+                    }
+                }
+
+                if (text.Contains("FONENANA"))
+                {
+                    if (text.Contains("Domicile"))
+                    {
+                        responseKeyValue["address"] = ExtractAllCharacterAfterOccurence(text, "Domicile") + " " +
+                                                      textListFromBlock[i + 1];
+                    }
+                    else
+                    {
+                        responseKeyValue["address"] = ExtractAllCharacterAfterOccurence(text, "FONENANA") + " " +
+                                                      textListFromBlock[i + 1];
+                    }
+                }
+
+                if (text.Contains("Profession"))
+                {
+                    responseKeyValue["job"] = ExtractAllCharacterAfterOccurence(text, "Profession");
+                }
+
+                if (text.Contains("Arrondissement"))
+                {
+                    responseKeyValue["district"] = ExtractAllCharacterAfterOccurence(text, "Arrondissement");
+                }
+
+                if (text.Contains("RAY NITERAKA"))
+                {
+                    if (text.Contains("Père"))
+                    {
+                        responseKeyValue["fatherName"] = ExtractAllCharacterAfterOccurence(text, "Père");
+                    }
+                    else
+                    {
+                        responseKeyValue["fatherName"] = ExtractAllCharacterAfterOccurence(text, "/");
+                    }
+                } 
+                if (text.Contains("RENY NITERAKA"))
+                {
+                    if (text.Contains("Mère"))
+                    {
+                        responseKeyValue["motherName"] = ExtractAllCharacterAfterOccurence(text, "Mère");
+                    }
+                    else
+                    {
+                        responseKeyValue["motherName"] = ExtractAllCharacterAfterOccurence(text, "/");
+                    }
+                }
+
+                if (text.Contains("NATAO TAO"))
+                {
+                    if (text.Contains("Fait à"))
+                    {
+                        responseKeyValue["doneAt"] = ExtractAllCharacterAfterOccurence(text, "Fait à");
+                    }
+                    else
+                    {
+                        responseKeyValue["doneAt"] = ExtractAllCharacterAfterOccurence(text, "TAO");
+                    }
+                }
+                if (text.Contains("TAMIN'NY"))
+                {
+                    if (text.Contains("Le"))
+                    {
+                        Console.WriteLine("tafiditra ato ve io");
+                        responseKeyValue["on"] = ExtractAllCharacterAfterOccurence(text, "TAMIN'NY/Le");
+                    }
+                    else
+                    {
+                        responseKeyValue["on"] = ExtractAllCharacterAfterOccurence(text, "/");
+                    }
+                }
+                i++;
+            }
+
+            /*var finalResponse = new ArrayList();
+            finalResponse.Add(textListFromBlock);
+            finalResponse.Add(responseKeyValue);*/
+            
+            return Ok(responseKeyValue);
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            return StatusCode(500, $"An error occured: {e.Message}");
         }
     }
-    
 }

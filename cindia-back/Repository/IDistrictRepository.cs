@@ -5,7 +5,8 @@ namespace cindia_back.Repository;
 public interface IDistrictRepository
 {
     Task<IEnumerable<DistrictDto>> GetDistrict();
-    Task<DistrictDto> GetDistrictById(int DistrictId); 
-    Task<bool> DeleteDistrict(int DistrictId);
-   Task<object?> CreateUpdateDistrict(DistrictDto districtDto);
+    Task<DistrictDto> GetDistrictById(int districtId); 
+    Task<DistrictDto> UpdateDistrcit( DistrictDto districtDto);
+    Task<bool> DeleteDistrict(int districtId);
+    Task<DistrictDto> CreateDistrict(DistrictDto districtDto);
 }

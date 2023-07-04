@@ -35,6 +35,7 @@ public class ApplicationDbContext:DbContext
             .HasMany(s => s.DistrictSection)
             .WithOne(s => s.SectionDistrict)
             .HasForeignKey(s => s.SectionId);
+            
         
     }
 }

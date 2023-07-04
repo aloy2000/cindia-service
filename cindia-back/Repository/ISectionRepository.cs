@@ -5,7 +5,7 @@ namespace cindia_back.Repository;
 public interface ISectionRepository
 {
     Task<IEnumerable<SectionDto>> GetSection();
-    Task<SectionDto> GetSectionById(int SectionId); 
-    Task<bool> DeleteSection(int SectionId);
-    Task<object?> CreateUpdateSection(SectionDto sectionDto);
+    Task<SectionDto> GetSectionById(int sectionId); 
+    Task<SectionDto> UpdateSection( SectionDto sectionDto);
+    Task<bool> DeleteSection(int sectionId);
 }
