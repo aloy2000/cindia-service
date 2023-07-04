@@ -10,9 +10,9 @@ public class UserDto
     
     public string? Birthday { get; set; }
 
-    public string? Birthplace { get; set; }
+    public DateTime? Birthplace { get; set; }
     
-    public string? Adress { get; set; }
+    public string? Address { get; set; }
 
     public string? FathersName { get; set; }
 

@@ -50,6 +50,7 @@ public class UserController:Controller
     [Route("register")]
     public async Task<object> Create(UserDto userDto)
     {
+        Console.WriteLine("userDto" + userDto);
         try
         {
             var userCreated = await _userRepository.CreateUser(userDto);

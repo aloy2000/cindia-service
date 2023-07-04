@@ -15,9 +15,11 @@ using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddCors(p => p.AddPolicy("cors-app", builder =>
+builder.Services.AddCors(p => p.AddDefaultPolicy( policy =>
 {
-    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+    policy.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
 }));
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -93,7 +95,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("cors-app");
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();    
 
