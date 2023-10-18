@@ -29,9 +29,15 @@ public class UserDto
     public string? ScanCIN { get; set; }
     
     public string? Password { get; set; }
+    public string? Role {get; set;}
     
+    public DateTime CreatedAt { get; set; }
+
     public int SectionId { get; set; }
-    public int UserCasierId { get; set; }
+    // public int UserCasierId { get; set; }
     public int UserDistrictId { get; set; } //foreign key
+
+    public ICollection<CasierDto> UserCasuer { get; set; }
+
 
 }

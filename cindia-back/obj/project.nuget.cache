@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "L9Fa2hf9mMtB2GE58KjnRIs0ZcUMSSA6ujbRJjEEXWMVULHamp9JG2WuVe/WPlT18KKLYqFGKcvmT5AhUcRrXA==",
+  "dgSpecHash": "cQYdo7fhVFTy/mg8nygGVn3VXw+FUVyASenhkyzYQWBximkXUsD8b30EWT3BJeFS4UhYQ46Dxu0JoLiP5ZGQcg==",
   "success": true,
-  "projectFilePath": "/home/aloy/RiderProjects/cindia-back/cindia-back/cindia-back.csproj",
+  "projectFilePath": "/media/aloy/88fe7a2c-0bfa-4f0f-8899-431cda4a7545/home/aloy/RiderProjects/cindia-back/cindia-back/cindia-back.csproj",
   "expectedPackageFiles": [
     "/home/aloy/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
     "/home/aloy/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

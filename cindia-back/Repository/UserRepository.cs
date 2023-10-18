@@ -57,6 +57,7 @@ public class UserRepository : IUserRepository
 
     public async Task<UserDto> CreateUser(UserDto userDto)
     {
+        userDto.CreatedAt = DateTime.UtcNow;
         User user = _mapper.Map<UserDto, User>(userDto);
         //System.Console.WriteLine("User repository from dto:", user);
 

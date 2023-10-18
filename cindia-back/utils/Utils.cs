@@ -13,7 +13,7 @@ public static class Utils
         {
             string[] wordsAfterKeyword = new string[words.Length - keywordIndex - 1];
             Array.Copy(words, keywordIndex + 1, wordsAfterKeyword, 0, words.Length - keywordIndex - 1);
-            
+
             string result = string.Join(" ", wordsAfterKeyword);
             return result;
         }
@@ -24,7 +24,7 @@ public static class Utils
     {
         try
         {
-           return Int32.Parse(input);
+            return Int32.Parse(input);
         }
         catch (Exception e)
         {
@@ -37,7 +37,7 @@ public static class Utils
         try
         {
             var inputToArray = input.Split(' ');
-            if (inputToArray[1] == "FEVRIER" || inputToArray[1]== "fevrier")
+            if (inputToArray[1] == "FEVRIER" || inputToArray[1] == "fevrier")
             {
                 englishNameMonth = "february";
             }
@@ -55,7 +55,16 @@ public static class Utils
             return false;
         }
     }
-    
+
+    public static IEnumerable<T> Paginate<T>(IEnumerable<T> items, int page, int size)
+    {
+        var totalItems = items.Count();
+        var totalPages = (int)Math.Ceiling((double)totalItems / size);
+        var paginatedItems = items.Skip((page - 1) * size).Take(size);
+
+        return paginatedItems;
+    }
+
     private static string GetEnglishMonthName(string frenchMonthName)
     {
         CultureInfo frenchCulture = new CultureInfo("fr-FR");

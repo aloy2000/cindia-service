@@ -3,11 +3,11 @@ using cindia_back.Models;
 namespace cindia_back.DbContext;
 using Microsoft.EntityFrameworkCore;
 
-public class ApplicationDbContext:DbContext
+public class ApplicationDbContext : DbContext
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
-        
+
     }
     public DbSet<Casier> Casiers { get; set; }
     public DbSet<District> Districts { get; set; }
@@ -20,22 +20,20 @@ public class ApplicationDbContext:DbContext
             .HasMany(u => u.Users)
             .WithOne(o => o.Section)
             .HasForeignKey(o => o.SectionId);
-        
-        modelBuilder.Entity<Casier>()
-            .HasMany(c => c.CasierUser)
-            .WithOne(u => u.UserCasier)
-            .HasForeignKey(u => u.UserCasierId);
-        
+
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.UserCasier)
+            .WithOne(c => c.UserCasier)
+            .HasForeignKey(c => c.CasierUserId);
+
         modelBuilder.Entity<District>()
             .HasMany(u => u.DistrictUsers)
             .WithOne(d => d.UserDistrict)
             .HasForeignKey(u => u.UserDistrictId);
-        
+
         modelBuilder.Entity<District>()
             .HasMany(s => s.DistrictSection)
             .WithOne(s => s.SectionDistrict)
             .HasForeignKey(s => s.SectionId);
-            
-        
     }
 }

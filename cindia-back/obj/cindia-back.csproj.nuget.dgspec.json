@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/aloy/RiderProjects/cindia-back/cindia-back/cindia-back.csproj": {}
+    "/media/aloy/88fe7a2c-0bfa-4f0f-8899-431cda4a7545/home/aloy/RiderProjects/cindia-back/cindia-back/cindia-back.csproj": {}
   },
   "projects": {
-    "/home/aloy/RiderProjects/cindia-back/cindia-back/cindia-back.csproj": {
+    "/media/aloy/88fe7a2c-0bfa-4f0f-8899-431cda4a7545/home/aloy/RiderProjects/cindia-back/cindia-back/cindia-back.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/aloy/RiderProjects/cindia-back/cindia-back/cindia-back.csproj",
+        "projectUniqueName": "/media/aloy/88fe7a2c-0bfa-4f0f-8899-431cda4a7545/home/aloy/RiderProjects/cindia-back/cindia-back/cindia-back.csproj",
         "projectName": "cindia-back",
-        "projectPath": "/home/aloy/RiderProjects/cindia-back/cindia-back/cindia-back.csproj",
+        "projectPath": "/media/aloy/88fe7a2c-0bfa-4f0f-8899-431cda4a7545/home/aloy/RiderProjects/cindia-back/cindia-back/cindia-back.csproj",
         "packagesPath": "/home/aloy/.nuget/packages/",
-        "outputPath": "/home/aloy/RiderProjects/cindia-back/cindia-back/obj/",
+        "outputPath": "/media/aloy/88fe7a2c-0bfa-4f0f-8899-431cda4a7545/home/aloy/RiderProjects/cindia-back/cindia-back/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/aloy/.nuget/NuGet/NuGet.Config"
@@ -20,7 +20,6 @@
           "net7.0"
         ],
         "sources": {
-          "/usr/share/dotnet/sdk/7.0.302/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -113,7 +112,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.302/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.110/RuntimeIdentifierGraph.json"
         }
       }
     }

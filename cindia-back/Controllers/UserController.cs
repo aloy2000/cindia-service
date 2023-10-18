@@ -2,6 +2,8 @@ using cindia_back.Models.Dto;
 using cindia_back.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static cindia_back.utils.Utils;
+
 
 namespace cindia_back.Controllers;
 
@@ -51,9 +53,26 @@ public class UserController : Controller
     [Route("register")]
     public async Task<object> Create([FromBody] UserDto userDto)
     {
-        Console.WriteLine("userDto:" + userDto.Name);
         try
         {
+            var userWithExistingCin = await _userRepository.FindUserByNum(userDto?.NumCIN);
+            System.Console.WriteLine("userWithExistingCin:" + userWithExistingCin);
+            if (userWithExistingCin != null)
+            {
+                _responseDto.IsSuccess = false;
+                _responseDto.DisplayMessage = "User with this num Cin already exist";
+                return _responseDto;
+            }
+            var numCinToChar = userDto.NumCIN?.ToCharArray();
+            var sexNumber = Char.GetNumericValue(numCinToChar[5]);
+            if (sexNumber % 2 == 0)
+            {
+                userDto.Sex = "Feminin";
+            }
+            else
+            {
+                userDto.Sex = "Masculin";
+            }
             var userCreated = await _userRepository.CreateUser(userDto);
             _responseDto.Result = userCreated;
             _responseDto.DisplayMessage = "user created successful";
@@ -69,12 +88,13 @@ public class UserController : Controller
 
 
     [HttpGet]
-    public async Task<object> Get()
+    public async Task<object> Get(int page = 1, int size = 1)
     {
         try
         {
             var users = await _userRepository.GetUser();
-            _responseDto.Result = users;
+            var paginateUsers = Paginate<UserDto>(users, page, size);
+            _responseDto.Result = paginateUsers;
         }
         catch (Exception e)
         {

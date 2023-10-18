@@ -11,7 +11,7 @@ using static cindia_back.utils.Utils;
 namespace cindia_back.Controllers;
 
 [Route("api/[controller]")]
-public class CinAnalysController:Controller
+public class CinAnalysController : Controller
 {
     private readonly IAmazonTextract _textract;
     private readonly AWSCredentials _credentials;
@@ -27,7 +27,6 @@ public class CinAnalysController:Controller
     {
         try
         {
-            Console.WriteLine("File uploaded" + fileUpload);
             if (fileUpload == null || fileUpload.Length <= 0)
             {
                 return BadRequest("No cin uploaded");
@@ -53,7 +52,7 @@ public class CinAnalysController:Controller
             var textListFromBlock = new List<string>();
             var responseKeyValue = new Dictionary<string, object>();
             var dateFormat = "dd MMMM yyyy";
-            
+
             foreach (var block in responseBlockText)
             {
                 textListFromBlock.Add(block.Text);
@@ -80,7 +79,7 @@ public class CinAnalysController:Controller
                 if (text.Contains("Tao/") || text.Contains("TAO/"))
                 {
                     var textSplitArray = text.Split(" ");
-                    responseKeyValue["birthplace"] = textSplitArray.Last() + " " + textListFromBlock[i + 1] ;
+                    responseKeyValue["birthplace"] = textSplitArray.Last() + " " + textListFromBlock[i + 1];
                 }
 
                 if (!Equals(ParseStringToNumber(text), false))
@@ -129,7 +128,7 @@ public class CinAnalysController:Controller
                     {
                         responseKeyValue["fatherName"] = ExtractAllCharacterAfterOccurence(text, "/");
                     }
-                } 
+                }
                 if (text.Contains("RENY NITERAKA"))
                 {
                     if (text.Contains("Mère"))
@@ -171,7 +170,7 @@ public class CinAnalysController:Controller
             /*var finalResponse = new ArrayList();
             finalResponse.Add(textListFromBlock);
             finalResponse.Add(responseKeyValue);*/
-            
+
             return Ok(responseKeyValue);
         }
         catch (Exception e)

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using cindia_back.DbContext;
@@ -11,9 +12,11 @@ using cindia_back.DbContext;
 namespace cindia_back.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230706132845_add_created_at_column_user")]
+    partial class add_created_at_column_user
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +32,6 @@ namespace cindia_back.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CasierId"));
-
-                    b.Property<int>("CasierUserId")
-                        .HasColumnType("integer");
 
                     b.Property<string>("DateAudiance")
                         .IsRequired()
@@ -50,8 +50,6 @@ namespace cindia_back.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("CasierId");
-
-                    b.HasIndex("CasierUserId");
 
                     b.ToTable("Casiers");
                 });
@@ -160,6 +158,9 @@ namespace cindia_back.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("UserCasierId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("UserDistrictId")
                         .HasColumnType("integer");
 
@@ -167,20 +168,11 @@ namespace cindia_back.Migrations
 
                     b.HasIndex("SectionId");
 
+                    b.HasIndex("UserCasierId");
+
                     b.HasIndex("UserDistrictId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("cindia_back.Models.Casier", b =>
-                {
-                    b.HasOne("cindia_back.Models.User", "UserCasier")
-                        .WithMany("UserCasier")
-                        .HasForeignKey("CasierUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UserCasier");
                 });
 
             modelBuilder.Entity("cindia_back.Models.Section", b =>
@@ -202,6 +194,12 @@ namespace cindia_back.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("cindia_back.Models.Casier", "UserCasier")
+                        .WithMany("CasierUser")
+                        .HasForeignKey("UserCasierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("cindia_back.Models.District", "UserDistrict")
                         .WithMany("DistrictUsers")
                         .HasForeignKey("UserDistrictId")
@@ -210,7 +208,14 @@ namespace cindia_back.Migrations
 
                     b.Navigation("Section");
 
+                    b.Navigation("UserCasier");
+
                     b.Navigation("UserDistrict");
+                });
+
+            modelBuilder.Entity("cindia_back.Models.Casier", b =>
+                {
+                    b.Navigation("CasierUser");
                 });
 
             modelBuilder.Entity("cindia_back.Models.District", b =>
@@ -223,11 +228,6 @@ namespace cindia_back.Migrations
             modelBuilder.Entity("cindia_back.Models.Section", b =>
                 {
                     b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("cindia_back.Models.User", b =>
-                {
-                    b.Navigation("UserCasier");
                 });
 #pragma warning restore 612, 618
         }

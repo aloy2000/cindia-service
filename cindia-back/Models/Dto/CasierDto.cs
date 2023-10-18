@@ -12,6 +12,9 @@ public class CasierDto
 
     public string? DateAudiance { get; set; }
     
-    public ICollection<UserDto> CasierUser { get; set; }
+    // public ICollection<UserDto> CasierUser { get; set; }
+
+    public int UserCasierId { get; set; }
+
 
 }

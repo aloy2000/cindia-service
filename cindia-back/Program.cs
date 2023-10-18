@@ -13,14 +13,18 @@ using Microsoft.IdentityModel.Tokens;
 
 
 var builder = WebApplication.CreateBuilder(args);
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 
 // Add services to the container.
-builder.Services.AddCors(p => p.AddDefaultPolicy( policy =>
+builder.Services.AddCors(options =>
 {
-    policy.AllowAnyOrigin()
-        .AllowAnyHeader()
-        .AllowAnyMethod();
-}));
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:5173/");
+                      });
+});
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -40,12 +44,13 @@ builder.Services.AddAWSService<IAmazonTextract>(new AWSOptions()
 {
     Region = RegionEndpoint.USEast1
 });
-builder.Services.AddSingleton<AWSCredentials>(sp => 
+builder.Services.AddSingleton<AWSCredentials>(sp =>
      new BasicAWSCredentials("AKIA6I7OWIV4HP3V262C", "e85CiNxYhmmZ77Ureu74Ud9mlCkQtAQPtp9b44FM")
     );
 builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
 
 builder.Services.AddAWSService<IAmazonService>();
+builder.Services.AddSignalR();
 
 
 builder.Services.AddScoped<ICasierRepository, CasierRepository>();
@@ -95,11 +100,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors();
+app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthentication();
-app.UseAuthorization();    
-
-
-
+app.UseAuthorization();
 app.MapControllers();
+app.MapHub<ChatHub>("/chathub");
 app.Run();
