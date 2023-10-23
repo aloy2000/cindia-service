@@ -17,11 +17,14 @@ public class MappingProfile : Profile
 
         CreateMap<UserDto, User>().ReverseMap();
         CreateMap<User, UserDto>();
-        
+
         CreateMap<DistrictDto, District>().ReverseMap();
         CreateMap<District, DistrictDto>();
 
         CreateMap<SectionDto, Section>().ReverseMap();
         CreateMap<Section, SectionDto>();
+
+        CreateMap<DemandeDto, Demande>().ReverseMap();
+        CreateMap<Demande, DemandeDto>();
     }
 }

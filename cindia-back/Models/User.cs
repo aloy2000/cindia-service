@@ -44,6 +44,8 @@ public class User
     // public int UserCasierId { get; set; }
     // public Casier UserCasier { get; set; }
     public ICollection<Casier> UserCasier { get; set; }
+    public ICollection<Demande> DemandeUser { get; set; }
+
 
     public int UserDistrictId { get; set; } //foreign key
     public District UserDistrict { get; set; } // navigation property

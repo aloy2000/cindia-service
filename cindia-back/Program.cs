@@ -57,6 +57,7 @@ builder.Services.AddScoped<ICasierRepository, CasierRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IDistrictRepository, DistrictRepository>();
 builder.Services.AddScoped<ISectionRepository, SectionRepository>();
+builder.Services.AddScoped<IDemandeRepository, DemandeRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

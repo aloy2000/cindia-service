@@ -13,6 +13,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<District> Districts { get; set; }
     public DbSet<Section> Sections { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Demande> Demande { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -35,5 +36,14 @@ public class ApplicationDbContext : DbContext
             .HasMany(s => s.DistrictSection)
             .WithOne(s => s.SectionDistrict)
             .HasForeignKey(s => s.SectionId);
+        modelBuilder.Entity<Demande>()
+            .HasOne(d => d.UserDemande)
+            .WithMany(u => u.DemandeUser);
+        modelBuilder.Entity<User>()
+           .HasMany(u => u.DemandeUser)
+           .WithOne(d => d.UserDemande)
+           .HasForeignKey(u => u.UserId);
+
+
     }
 }
